@@ -29,9 +29,12 @@
       }"
     >
       <div
+        appDragSelection
+        [draggingState]="draggingState"
+        [row]="row"
+        [column]="column"
         class="table-cell handle-wrapper"
         style="user-select: none"
-        [ngClass]="{ 'is-marked': isMarked }"
         (mouseenter)="onMouseEnterCell(row, column)"
         (mouseleave)="onMouseLeaveCell(row, column)"
         (mousedown)="onRightClickMouseDown($event)"

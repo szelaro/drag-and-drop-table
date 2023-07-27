@@ -31,7 +31,7 @@
   height: 100%;
 }
 
-.is-marked {
+.cell-in-selection {
   border: 1px solid red;
   background: lightblue;
   z-index: 10;
