@@ -23,7 +23,7 @@
   right: -3px;
   height: 9px;
   width: 9px;
-  cursor: pointer;
+  cursor: crosshair;
 }
 
 .handle-wrapper {

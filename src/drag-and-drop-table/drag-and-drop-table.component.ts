@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DraggingState } from '../dragging-state';
 
@@ -36,6 +36,7 @@ export class DragAndDropTableComponent implements OnInit {
     }
 
     this.draggingState.state = false;
+    this.cursor = 'auto';
     this.draggingStateSubject.next(this.draggingState);
     console.log(this.draggingState);
     if (
@@ -90,6 +91,8 @@ export class DragAndDropTableComponent implements OnInit {
     event.preventDefault();
   }
 
+  @HostBinding('style.cursor') private cursor = 'default';
+
   constructor() {
     this.reset();
   }
@@ -102,7 +105,7 @@ export class DragAndDropTableComponent implements OnInit {
       event.preventDefault();
       this.draggingState.state = false;
       this.draggingStateSubject.next(this.draggingState);
-      console.log('right click');
+      this.cursor = 'auto';
       return;
     }
 
@@ -114,6 +117,7 @@ export class DragAndDropTableComponent implements OnInit {
       incrementRow: 0,
     };
     this.draggingStateSubject.next(this.draggingState);
+    this.cursor = 'crosshair';
   }
 
   onRightClickMouseDown(event: MouseEvent) {
@@ -124,6 +128,7 @@ export class DragAndDropTableComponent implements OnInit {
     // on right click remove selection
     event.preventDefault();
     this.draggingState.state = false;
+    this.cursor = 'auto';
     this.draggingStateSubject.next(this.draggingState);
     console.log('right click');
   }
