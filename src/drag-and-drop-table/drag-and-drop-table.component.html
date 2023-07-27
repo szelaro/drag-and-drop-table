@@ -1,0 +1,47 @@
+<div>
+  <div
+    style="display: grid; grid-template-columns: 5fr repeat(10, 1fr)"
+    *ngFor="let rowData of tableData; let row = index"
+  >
+    <div style="text-align: left">{{ rowData.rowName }}</div>
+    <ng-template
+      #tableCell
+      *ngFor="let cellData of rowData.cells; let column = index"
+      let-isMarked="isMarked"
+      [ngTemplateOutlet]="tableCell"
+      [ngTemplateOutletContext]="{
+        isMarked:
+          draggingState.state &&
+          draggingState.startCell &&
+          draggingState.endCell &&
+          ((draggingState.incrementRow === 1 &&
+            row >= draggingState.startCell.row &&
+            row <= draggingState.endCell.row) ||
+            (draggingState.incrementRow === -1 &&
+              row <= draggingState.startCell.row &&
+              row >= draggingState.endCell.row)) &&
+          ((draggingState.incrementColumn === 1 &&
+            column >= draggingState.startCell.column &&
+            column <= draggingState.endCell.column) ||
+            (draggingState.incrementColumn === -1 &&
+              column <= draggingState.startCell.column &&
+              column >= draggingState.endCell.column))
+      }"
+    >
+      <div
+        class="table-cell handle-wrapper"
+        style="user-select: none"
+        [ngClass]="{ 'is-marked': isMarked }"
+        (mouseenter)="onMouseEnterCell(row, column)"
+        (mouseleave)="onMouseLeaveCell(row, column)"
+      >
+        <div class="data-wrapper"></div>
+        {{ cellData }}
+        <div
+          class="fill-handle"
+          (mousedown)="onFillHandleButtonClicked(row, column)"
+        ></div>
+      </div>
+    </ng-template>
+  </div>
+</div>
