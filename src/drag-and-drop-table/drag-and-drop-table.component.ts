@@ -92,7 +92,9 @@ export class DragAndDropTableComponent implements OnInit {
 
   ngOnInit() {}
 
-  onFillHandleButtonClicked(row: number, column: number) {
+  onFillHandleButtonClicked(row: number, column: number, event: MouseEvent) {
+    if (event.button === 2) { return; }
+
     this.draggingState = {
       state: true,
       startCell: { row: row, column: column },
