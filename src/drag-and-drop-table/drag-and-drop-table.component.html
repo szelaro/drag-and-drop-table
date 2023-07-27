@@ -14,13 +14,13 @@
           draggingState.state &&
           draggingState.startCell &&
           draggingState.endCell &&
-          ((draggingState.incrementRow === 1 &&
+          ((draggingState.incrementRow >= 0 &&
             row >= draggingState.startCell.row &&
             row <= draggingState.endCell.row) ||
             (draggingState.incrementRow === -1 &&
               row <= draggingState.startCell.row &&
               row >= draggingState.endCell.row)) &&
-          ((draggingState.incrementColumn === 1 &&
+          ((draggingState.incrementColumn >= 0 &&
             column >= draggingState.startCell.column &&
             column <= draggingState.endCell.column) ||
             (draggingState.incrementColumn === -1 &&

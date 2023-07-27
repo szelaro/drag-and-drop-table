@@ -51,7 +51,6 @@ export class DragAndDropTableComponent implements OnInit {
       isNaN(this.draggingState.startCell.row) ||
       this.draggingState.startCell.row < 0
     ) {
-      console.log('ŐRLI ÁT');
       return;
     }
 
