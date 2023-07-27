@@ -4,48 +4,24 @@
     *ngFor="let rowData of tableData; let row = index"
   >
     <div style="text-align: left">{{ rowData.rowName }}</div>
-    <ng-template
-      #tableCell
+    <div
       *ngFor="let cellData of rowData.cells; let column = index"
-      let-isMarked="isMarked"
-      [ngTemplateOutlet]="tableCell"
-      [ngTemplateOutletContext]="{
-        isMarked:
-          draggingState.state &&
-          draggingState.startCell &&
-          draggingState.endCell &&
-          ((draggingState.incrementRow >= 0 &&
-            row >= draggingState.startCell.row &&
-            row <= draggingState.endCell.row) ||
-            (draggingState.incrementRow === -1 &&
-              row <= draggingState.startCell.row &&
-              row >= draggingState.endCell.row)) &&
-          ((draggingState.incrementColumn >= 0 &&
-            column >= draggingState.startCell.column &&
-            column <= draggingState.endCell.column) ||
-            (draggingState.incrementColumn === -1 &&
-              column <= draggingState.startCell.column &&
-              column >= draggingState.endCell.column))
-      }"
+      appDragSelection
+      [draggingStateSubject]="draggingStateSubject"
+      [row]="row"
+      [column]="column"
+      class="table-cell handle-wrapper"
+      style="user-select: none"
+      (mouseenter)="onMouseEnterCell(row, column)"
+      (mouseleave)="onMouseLeaveCell(row, column)"
+      (mousedown)="onRightClickMouseDown($event)"
     >
+      <div class="data-wrapper"></div>
+      {{ cellData }}
       <div
-        appDragSelection
-        [draggingStateSubject]="draggingStateSubject"
-        [row]="row"
-        [column]="column"
-        class="table-cell handle-wrapper"
-        style="user-select: none"
-        (mouseenter)="onMouseEnterCell(row, column)"
-        (mouseleave)="onMouseLeaveCell(row, column)"
-        (mousedown)="onRightClickMouseDown($event)"
-      >
-        <div class="data-wrapper"></div>
-        {{ cellData }}
-        <div
-          class="fill-handle"
-          (mousedown)="onFillHandleButtonClicked(row, column, $event)"
-        ></div>
-      </div>
-    </ng-template>
+        class="fill-handle"
+        (mousedown)="onFillHandleButtonClicked(row, column, $event)"
+      ></div>
+    </div>
   </div>
 </div>

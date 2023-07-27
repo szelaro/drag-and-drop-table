@@ -28,6 +28,7 @@ export class DragSelectionDirective implements OnInit {
     }
 
     this.draggingState = draggingState;
+    this.el.nativeElement.classList.remove('dragging-origo');
 
     const isInSelection: boolean =
       this.draggingState.state &&
@@ -47,6 +48,9 @@ export class DragSelectionDirective implements OnInit {
           this.column >= this.draggingState.endCell.column));
     if (isInSelection) {
       this.el.nativeElement.classList.add('cell-in-selection');
+      if (this.row === draggingState.startCell.row && this.column === draggingState.startCell.column) {
+        this.el.nativeElement.classList.add('dragging-origo');
+      }
     } else {
       this.el.nativeElement.classList.remove('cell-in-selection');
     }

@@ -43,3 +43,9 @@
   margin-bottom: 0.25em;
   width: 100%;
 }
+
+.dragging-origo {
+  border-width: 3px !important;
+  font-weight: bold;
+  color: blue;
+}
