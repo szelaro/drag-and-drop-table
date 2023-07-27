@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { DraggingState } from 'src/drag-selection.directive';
 
 @Component({
   selector: 'app-drag-and-drop-table',
@@ -6,13 +7,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./drag-and-drop-table.component.css'],
 })
 export class DragAndDropTableComponent implements OnInit {
-  draggingState: {
-    state: boolean;
-    startCell?: { row: number; column: number };
-    endCell?: { row: number; column: number };
-    incrementRow?: number;
-    incrementColumn?: number;
-  } = { state: false };
+  draggingState: DraggingState = { state: false };
 
   tableData: {
     rowName: string;
