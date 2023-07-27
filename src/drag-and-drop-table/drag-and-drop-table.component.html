@@ -39,7 +39,7 @@
         {{ cellData }}
         <div
           class="fill-handle"
-          (mousedown)="onFillHandleButtonClicked(row, column)"
+          (mousedown)="onFillHandleButtonClicked(row, column, $event)"
         ></div>
       </div>
     </ng-template>
