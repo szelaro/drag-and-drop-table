@@ -1,53 +1,54 @@
-import {
-  Directive,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ElementRef,
-} from '@angular/core';
+import { Directive, Input, OnInit, ElementRef } from '@angular/core';
+import { Subject } from 'rxjs';
 import { DraggingState } from './dragging-state';
 
 @Directive({
   selector: '[appDragSelection]',
 })
-export class DragSelectionDirective implements OnChanges {
-  @Input('draggingState') draggingState: DraggingState;
+export class DragSelectionDirective implements OnInit {
+  @Input('draggingStateSubject') draggingStateSubject: Subject<DraggingState>;
   @Input() row: number;
   @Input() column: number;
 
+  draggingState: DraggingState;
+
   constructor(private el: ElementRef) {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (!changes) {
+  ngOnInit() {
+    if (this.draggingStateSubject) {
+      this.draggingStateSubject.subscribe((draggingState: DraggingState) =>
+        this.handleDraggingStateChange(draggingState)
+      );
+    }
+  }
+
+  handleDraggingStateChange(draggingState: DraggingState) {
+    if (!draggingState || isNaN(this.row) || isNaN(this.column)) {
       return;
     }
 
-    if (
-      changes.hasOwnProperty('draggingState') &&
-      !isNaN(this.row) &&
-      !isNaN(this.column)
-    ) {
-      const isInSelection: boolean =
-        this.draggingState.state &&
-        this.draggingState.startCell &&
-        this.draggingState.endCell &&
-        ((this.draggingState.incrementRow >= 0 &&
-          this.row >= this.draggingState.startCell.row &&
-          this.row <= this.draggingState.endCell.row) ||
-          (this.draggingState.incrementRow === -1 &&
-            this.row <= this.draggingState.startCell.row &&
-            this.row >= this.draggingState.endCell.row)) &&
-        ((this.draggingState.incrementColumn >= 0 &&
-          this.column >= this.draggingState.startCell.column &&
-          this.column <= this.draggingState.endCell.column) ||
-          (this.draggingState.incrementColumn === -1 &&
-            this.column <= this.draggingState.startCell.column &&
-            this.column >= this.draggingState.endCell.column));
-      if (isInSelection) {
-        this.el.nativeElement.classList.add('cell-in-selection');
-      } else {
-        this.el.nativeElement.classList.remove('cell-in-selection');
-      }
+    this.draggingState = draggingState;
+
+    const isInSelection: boolean =
+      this.draggingState.state &&
+      this.draggingState.startCell &&
+      this.draggingState.endCell &&
+      ((this.draggingState.incrementRow >= 0 &&
+        this.row >= this.draggingState.startCell.row &&
+        this.row <= this.draggingState.endCell.row) ||
+        (this.draggingState.incrementRow === -1 &&
+          this.row <= this.draggingState.startCell.row &&
+          this.row >= this.draggingState.endCell.row)) &&
+      ((this.draggingState.incrementColumn >= 0 &&
+        this.column >= this.draggingState.startCell.column &&
+        this.column <= this.draggingState.endCell.column) ||
+        (this.draggingState.incrementColumn === -1 &&
+          this.column <= this.draggingState.startCell.column &&
+          this.column >= this.draggingState.endCell.column));
+    if (isInSelection) {
+      this.el.nativeElement.classList.add('cell-in-selection');
+    } else {
+      this.el.nativeElement.classList.remove('cell-in-selection');
     }
   }
 }

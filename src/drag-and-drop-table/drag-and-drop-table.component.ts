@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { DraggingState } from 'src/drag-selection.directive';
+import { Subject } from 'rxjs';
+import { DraggingState } from '../dragging-state';
 
 @Component({
   selector: 'app-drag-and-drop-table',
@@ -8,6 +9,7 @@ import { DraggingState } from 'src/drag-selection.directive';
 })
 export class DragAndDropTableComponent implements OnInit {
   draggingState: DraggingState = { state: false };
+  draggingStateSubject: Subject<DraggingState> = new Subject<DraggingState>();
 
   tableData: {
     rowName: string;
@@ -34,6 +36,7 @@ export class DragAndDropTableComponent implements OnInit {
     }
 
     this.draggingState.state = false;
+    this.draggingStateSubject.next(this.draggingState);
     console.log(this.draggingState);
     if (
       !this.draggingState.endCell ||
@@ -98,6 +101,7 @@ export class DragAndDropTableComponent implements OnInit {
       // on right click remove selection
       event.preventDefault();
       this.draggingState.state = false;
+      this.draggingStateSubject.next(this.draggingState);
       console.log('right click');
       return;
     }
@@ -109,6 +113,7 @@ export class DragAndDropTableComponent implements OnInit {
       incrementColumn: 0,
       incrementRow: 0,
     };
+    this.draggingStateSubject.next(this.draggingState);
   }
 
   onRightClickMouseDown(event: MouseEvent) {
@@ -119,6 +124,7 @@ export class DragAndDropTableComponent implements OnInit {
     // on right click remove selection
     event.preventDefault();
     this.draggingState.state = false;
+    this.draggingStateSubject.next(this.draggingState);
     console.log('right click');
   }
 
@@ -129,6 +135,7 @@ export class DragAndDropTableComponent implements OnInit {
 
     this.draggingState.endCell = { row: row, column: column };
     this.calcIncrementals();
+    this.draggingStateSubject.next(this.draggingState);
   }
 
   onMouseLeaveCell(row: number, column: number) {
@@ -141,6 +148,7 @@ export class DragAndDropTableComponent implements OnInit {
       column: this.draggingState.startCell?.column || null,
     };
     this.calcIncrementals();
+    this.draggingStateSubject.next(this.draggingState);
   }
 
   private calcIncrementals() {
