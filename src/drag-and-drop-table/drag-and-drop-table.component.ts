@@ -31,9 +31,10 @@ export class DragAndDropTableComponent implements OnInit {
       cells: [0.2, 0.4, 0.8, 1.6, 3.2, 3, 2.8, 2.6, 2.4, 2.2],
     },
   ];
+
   @HostListener('document:mouseup', ['$event'])
   onMouseUp(event: MouseEvent) {
-    if (!this.draggingState || !this.tableData?.length) {
+    if (!this.draggingState?.state || !this.tableData?.length) {
       return;
     }
 
@@ -86,6 +87,11 @@ export class DragAndDropTableComponent implements OnInit {
     }
   }
 
+  @HostListener('contextmenu', ['$event'])
+  onRightClick(event) {
+    event.preventDefault();
+  }
+
   constructor() {
     this.reset();
   }
@@ -93,7 +99,13 @@ export class DragAndDropTableComponent implements OnInit {
   ngOnInit() {}
 
   onFillHandleButtonClicked(row: number, column: number, event: MouseEvent) {
-    if (event.button === 2) { return; }
+    if (event.button === 2) {
+      // on right click remove selection
+      event.preventDefault();
+      this.draggingState.state = false;
+      console.log('right click');
+      return;
+    }
 
     this.draggingState = {
       state: true,
@@ -102,6 +114,17 @@ export class DragAndDropTableComponent implements OnInit {
       incrementColumn: 0,
       incrementRow: 0,
     };
+  }
+
+  onRightClickMouseDown(event: MouseEvent) {
+    if (event.button === 0) {
+      return;
+    } // on left click return
+
+    // on right click remove selection
+    event.preventDefault();
+    this.draggingState.state = false;
+    console.log('right click');
   }
 
   onMouseEnterCell(row: number, column: number) {

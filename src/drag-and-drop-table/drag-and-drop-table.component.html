@@ -34,6 +34,7 @@
         [ngClass]="{ 'is-marked': isMarked }"
         (mouseenter)="onMouseEnterCell(row, column)"
         (mouseleave)="onMouseLeaveCell(row, column)"
+        (mousedown)="onRightClickMouseDown($event)"
       >
         <div class="data-wrapper"></div>
         {{ cellData }}
