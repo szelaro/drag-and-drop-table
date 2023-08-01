@@ -7,9 +7,8 @@ import {
   leaveCellAction,
   removeSelectionAction,
   startSelection,
-} from 'src/store/dragging-state.action';
-import { selectTableData } from 'src/store/dragging-state.selector';
-import { DraggingState, TableRow } from '../dragging-state';
+} from '../store/dragging-state.action';
+import { selectTableData } from '../store/dragging-state.selector';
 
 @Component({
   selector: 'app-drag-and-drop-table',
