@@ -1,4 +1,3 @@
-import { Action } from '@ngrx/store';
 import { createAction, props } from '@ngrx/store/src/action_creator';
 
 export enum DraggingSateActionType {
