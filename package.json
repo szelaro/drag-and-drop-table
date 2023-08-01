@@ -14,7 +14,8 @@
     "@angular/compiler": "16.1.6",
     "@angular/animations": "16.1.6",
     "@angular/platform-browser": "16.1.6",
-    "@angular/platform-browser-dynamic": "16.1.6"
+    "@angular/platform-browser-dynamic": "16.1.6",
+    "@ngrx/store": "16.1.0"
   },
   "scripts": {
     "ng": "ng",
