@@ -1,6 +1,7 @@
 import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
+import { TableRow } from '../dragging-state';
 import {
   applyCopy,
   hoverCellAction,
@@ -16,7 +17,6 @@ import { selectTableData } from '../store/dragging-state.selector';
   styleUrls: ['./drag-and-drop-table.component.css'],
 })
 export class DragAndDropTableComponent implements OnInit {
-  draggingStateSubject: Subject<DraggingState> = new Subject<DraggingState>();
   tableData: Observable<TableRow[]>;
 
   @HostListener('document:mouseup', ['$event'])

@@ -1,12 +1,12 @@
 import { on } from '@ngrx/store';
 import { createReducer } from '@ngrx/store/src/reducer_creator';
-import { DraggingState, TableState } from 'src/dragging-state';
+import { DraggingState, TableState } from '../dragging-state';
 import {
   startSelection,
   hoverCellAction,
   leaveCellAction,
-  release,
   removeSelectionAction,
+  applyCopy,
 } from './dragging-state.action';
 
 export const initialState: TableState = {
@@ -41,7 +41,7 @@ export const draggingStateReducer = createReducer(
     },
   })),
 
-  on(release, (state, action) =>
+  on(applyCopy, (state, action) =>
     updateTableValues({
       ...state,
       draggingState: {

@@ -1,7 +1,7 @@
 <div>
   <div
     style="display: grid; grid-template-columns: 5fr repeat(10, 1fr)"
-    *ngFor="let rowData of tableData; let row = index"
+    *ngFor="let rowData of (tableData | async); let row = index"
   >
     <div style="text-align: left">{{ rowData.rowName }}</div>
     <div

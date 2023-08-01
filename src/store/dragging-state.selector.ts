@@ -2,7 +2,7 @@ import {
   createFeatureSelector,
   createSelector,
 } from '@ngrx/store/src/selector';
-import { TableState } from 'src/dragging-state';
+import { TableState } from '../dragging-state';
 
 export const selectTableState = createFeatureSelector<TableState>('tableState');
 
