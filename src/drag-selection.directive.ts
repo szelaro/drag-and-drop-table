@@ -1,25 +1,26 @@
 import { Directive, Input, OnInit, ElementRef } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { DraggingState } from './dragging-state';
+import { selectDraggingState } from './store/dragging-state.selector';
 
 @Directive({
   selector: '[appDragSelection]',
 })
 export class DragSelectionDirective implements OnInit {
-  @Input('draggingStateSubject') draggingStateSubject: Subject<DraggingState>;
   @Input() row: number;
   @Input() column: number;
 
   draggingState: DraggingState;
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef, private readonly store: Store) {}
 
   ngOnInit() {
-    if (this.draggingStateSubject) {
-      this.draggingStateSubject.subscribe((draggingState: DraggingState) =>
-        this.handleDraggingStateChange(draggingState)
-      );
-    }
+    this.store
+      .select(selectDraggingState)
+      ?.subscribe((draggingState: DraggingState) => {
+        this.handleDraggingStateChange(draggingState);
+      });
   }
 
   handleDraggingStateChange(draggingState: DraggingState) {
@@ -48,7 +49,10 @@ export class DragSelectionDirective implements OnInit {
           this.column >= this.draggingState.endCell.column));
     if (isInSelection) {
       this.el.nativeElement.classList.add('cell-in-selection');
-      if (this.row === draggingState.startCell.row && this.column === draggingState.startCell.column) {
+      if (
+        this.row === draggingState.startCell.row &&
+        this.column === draggingState.startCell.column
+      ) {
         this.el.nativeElement.classList.add('dragging-origo');
       }
     } else {

@@ -7,7 +7,6 @@
     <div
       *ngFor="let cellData of rowData.cells; let column = index"
       appDragSelection
-      [draggingStateSubject]="draggingStateSubject"
       [row]="row"
       [column]="column"
       class="table-cell handle-wrapper"

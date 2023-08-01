@@ -2,7 +2,7 @@ import { on } from '@ngrx/store';
 import { createReducer } from '@ngrx/store/src/reducer_creator';
 import { DraggingState, TableState } from 'src/dragging-state';
 import {
-  fillHandleMouseDown,
+  startSelection,
   hoverCellAction,
   leaveCellAction,
   release,
@@ -30,9 +30,9 @@ export const initialState: TableState = {
   ],
 };
 
-export const draggingStateReducer_ = createReducer(
+export const draggingStateReducer = createReducer(
   initialState,
-  on(fillHandleMouseDown, (state, action) => ({
+  on(startSelection, (state, action) => ({
     ...state,
     draggingState: {
       state: true,
