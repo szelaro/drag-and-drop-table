@@ -38,7 +38,6 @@ export class DragAndDropTableComponent implements OnInit {
     this.draggingState.state = false;
     this.cursor = 'auto';
     this.draggingStateSubject.next(this.draggingState);
-    console.log(this.draggingState);
     if (
       !this.draggingState.endCell ||
       isNaN(this.draggingState.endCell.column) ||
